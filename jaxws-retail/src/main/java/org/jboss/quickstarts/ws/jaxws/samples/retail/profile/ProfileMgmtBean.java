@@ -17,8 +17,10 @@
 package org.jboss.quickstarts.ws.jaxws.samples.retail.profile;
 
 import jakarta.ejb.Stateless;
-import jakarta.jws.WebService;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.jws.HandlerChain;
 import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
 import jakarta.jws.soap.SOAPBinding;
 
 /**
@@ -31,9 +33,15 @@ import jakarta.jws.soap.SOAPBinding;
     targetNamespace = "http://org.jboss.ws/samples/retail/profile",
     serviceName = "ProfileMgmtService")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+@HandlerChain(file = "handler-chain.xml")
 public class ProfileMgmtBean {
+
     @WebMethod
     public DiscountResponse getCustomerDiscount(DiscountRequest request) {
+
+        // Works fine:
+        CDI<Object> cdi = CDI.current();
+
         DiscountResponse dResponse = new DiscountResponse();
         dResponse.setCustomer(request.getCustomer());
         dResponse.setDiscount(10.00);

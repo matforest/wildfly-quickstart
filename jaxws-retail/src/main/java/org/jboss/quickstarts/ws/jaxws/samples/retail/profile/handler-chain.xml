@@ -1,0 +1,11 @@
+<handler-chains
+	xmlns="https://jakarta.ee/xml/ns/jakartaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/jakartaee_web_services_metadata_handler_3_0.xsd"
+	version="3.0">
+	<handler-chain>
+		<handler>
+			<handler-class>org.jboss.quickstarts.ws.jaxws.samples.retail.profile.SomeHandler</handler-class>
+		</handler>
+	</handler-chain>
+</handler-chains>
