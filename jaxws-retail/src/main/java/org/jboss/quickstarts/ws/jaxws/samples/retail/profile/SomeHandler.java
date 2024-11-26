@@ -4,10 +4,13 @@ import java.util.Set;
 
 import javax.xml.namespace.QName;
 
+import org.apache.deltaspike.core.api.provider.BeanProvider;
+import org.jboss.quickstarts.ws.jaxws.samples.retail.test.SomeProducer.SomeValueContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.enterprise.inject.spi.CDI;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.xml.ws.handler.MessageContext;
 import jakarta.xml.ws.handler.soap.SOAPHandler;
 import jakarta.xml.ws.handler.soap.SOAPMessageContext;
@@ -21,9 +24,9 @@ public class SomeHandler implements SOAPHandler<SOAPMessageContext> {
         logger.info("handleMessage called on {} ", this);
 
         try {
-            // This CDI call will fail
-            CDI<Object> cdi = CDI.current();
-            logger.info("CDI.current() call succeded: {}", cdi);
+            SomeTarget target = new SomeTarget();
+            BeanProvider.injectFields(target);
+            logger.info("BeanProvider call succeded: {}", target.value);
         } catch (Exception e) {
             logger.atError()
                   .setCause(e)
@@ -48,4 +51,10 @@ public class SomeHandler implements SOAPHandler<SOAPMessageContext> {
         return null;
     }
 
+    public static final class SomeTarget {
+
+        @Inject
+        @Named("SomeTargetValue")
+        public SomeValueContainer value;
+    }
 }
